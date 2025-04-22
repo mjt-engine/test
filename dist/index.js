@@ -1,7 +1,7 @@
 import { JestExtend as $, JestChaiExpect as M, JestAsymmetricMatchers as P } from "@vitest/expect";
-import * as d from "chai";
-function E(c) {
-  const u = {
+import * as l from "chai";
+function E(c, a = {}) {
+  const e = {
     passed: "✅",
     failed: "❌",
     timeout: "⏱️",
@@ -9,28 +9,28 @@ function E(c) {
     celebration: "🎉",
     unhappy: "😢"
   };
-  for (const e of c) {
+  for (const t of c) {
     console.groupCollapsed(
-      `%c🧪 Suite: ${e.name}`,
+      `%c🧪 Suite: ${t.name}`,
       "font-weight: bold; color: #5e9eff"
     );
-    for (const t of e.results) {
-      const n = {
+    for (const o of t.results) {
+      const i = {
         passed: "color: green;",
         failed: "color: red;",
         timeout: "color: orange;",
         pending: "color: gray;"
-      }, i = u[t.status], r = `font-weight: bold; ${n[t.status]}`, p = t.durationMs !== void 0 ? ` (${t.durationMs} ms)` : "";
+      }, p = e[o.status], g = `font-weight: bold; ${i[o.status]}`, h = o.durationMs !== void 0 ? ` (${o.durationMs} ms)` : "";
       console.groupCollapsed(
-        `%c${i} ${t.description}${p}`,
-        r
-      ), (t.status === "failed" || t.status === "timeout") && console.error(t.error), console.groupEnd();
+        `%c${p} ${o.description}${h}`,
+        g
+      ), (o.status === "failed" || o.status === "timeout") && console.error(o.error), console.groupEnd();
     }
     console.groupEnd();
   }
-  const o = c.flatMap((e) => e.results), l = o.filter((e) => e.status === "passed").length, a = o.filter((e) => e.status === "failed").length, s = o.filter((e) => e.status === "timeout").length, m = o.reduce((e, t) => e + (t.durationMs ?? 0), 0), f = a > 0 || s > 0 ? u.unhappy : u.celebration;
-  console.log(
-    `%c${f} Summary: %c${l} passed, %c${a} failed, %c${s} timed out, ⏱️ %c${m} ms total`,
+  const s = c.flatMap((t) => t.results), d = s.filter((t) => t.status === "passed").length, r = s.filter((t) => t.status === "failed").length, u = s.filter((t) => t.status === "timeout").length, m = s.reduce((t, o) => t + (o.durationMs ?? 0), 0), f = r > 0 || u > 0 ? e.unhappy : e.celebration, { console: n = console } = a;
+  n.log(
+    `%c${f} Summary: %c${d} passed, %c${r} failed, %c${u} timed out, ⏱️ %c${m} ms total`,
     "font-weight: bold;",
     "color: green; font-weight: bold;",
     "color: red; font-weight: bold;",
@@ -38,49 +38,49 @@ function E(c) {
     "color: cyan; font-weight: bold;"
   );
 }
-function x({
+function C({
   ctxMapper: c,
-  defaultTimeoutMs: u = 5e3
+  defaultTimeoutMs: a = 5e3
 } = {}) {
-  const o = [], l = [];
-  d.use($), d.use(M), d.use(P);
-  const a = d.expect;
-  let s = null;
-  function m(t, n) {
-    const i = { name: t, results: [] };
-    s = i, o.push(i), n(), s = null;
+  const e = [], s = [];
+  l.use($), l.use(M), l.use(P);
+  const d = l.expect;
+  let r = null;
+  function u(n, t) {
+    const o = { name: n, results: [] };
+    r = o, e.push(o), t(), r = null;
   }
-  function f(t, n, i) {
-    if (!s) throw new Error("test() called outside of describe()");
-    const r = { description: t, status: "pending" };
-    s.results.push(r);
-    const p = i?.timeoutMs ?? u, h = performance.now(), w = new Promise(
-      (g, b) => setTimeout(() => b(new Error("Test timed out")), p)
+  function m(n, t, o) {
+    if (!r) throw new Error("test() called outside of describe()");
+    const i = { description: n, status: "pending" };
+    r.results.push(i);
+    const p = o?.timeoutMs ?? a, g = performance.now(), h = new Promise(
+      (w, b) => setTimeout(() => b(new Error("Test timed out")), p)
     ), y = () => Promise.race([
-      Promise.resolve().then(() => c ? c(n) : n(void 0)),
-      w
+      Promise.resolve().then(() => c ? c(t) : t(void 0)),
+      h
     ]).then(() => {
-      r.status = "passed";
-    }).catch((g) => {
-      r.status = g?.message === "Test timed out" ? "timeout" : "failed", r.error = g;
+      i.status = "passed";
+    }).catch((w) => {
+      i.status = w?.message === "Test timed out" ? "timeout" : "failed", i.error = w;
     }).finally(() => {
-      r.durationMs = Math.round(performance.now() - h);
+      i.durationMs = Math.round(performance.now() - g);
     });
-    l.push(y);
+    s.push(y);
   }
-  async function e() {
-    for (const t of l)
-      await t();
-    return o;
+  async function f() {
+    for (const n of s)
+      await n();
+    return e;
   }
   return {
-    describe: m,
-    test: f,
-    expect: a,
-    runTests: e,
-    printResultsPretty: () => E(o)
+    describe: u,
+    test: m,
+    expect: d,
+    runTests: f,
+    printResultsPretty: () => E(e)
   };
 }
 export {
-  x as Tester
+  C as Tests
 };

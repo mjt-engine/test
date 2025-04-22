@@ -1,7 +1,7 @@
 import type { ExpectStatic } from "@vitest/expect";
 import { CtxMapper } from "./type/Ctx";
 import { SuiteResult } from "./type/SuiteResult";
-export declare function Tester<T>({ ctxMapper, defaultTimeoutMs, }?: Partial<{
+export declare function Tests<T>({ ctxMapper, defaultTimeoutMs, }?: Partial<{
     ctxMapper: CtxMapper<T>;
     defaultTimeoutMs: number;
 }>): {

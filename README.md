@@ -6,4 +6,4 @@ Helpful tools for working with tests that attempt to follow the Jest/Vitest stan
 
 ## Documentation
 
-For detailed documentation, please visit the [project documentation](https://mjt-engine.github.io/error).
+For detailed documentation, please visit the [project documentation](https://mjt-engine.github.io/test).

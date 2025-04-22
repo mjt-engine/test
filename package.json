@@ -1,0 +1,36 @@
+{
+  "name": "@mjt-engine/test",
+  "version": "2025.4.21-1038",
+  "sideEffects": false,
+  "description": "test module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "type": "module",
+  "scripts": {
+    "docs": "typedoc src/index.ts",
+    "build-docs": "pnpm run build && pnpm run docs",
+    "changelog": "./scripts/changes.sh > CHANGELOG.md",
+    "changelog-version": "pnpm run changelog && ./scripts/version.sh",
+    "publish": "pnpm run build-docs && pnpm run changelog-version",
+    "test": "vitest",
+    "check": "tsc --noEmit -w",
+    "start": "vite build --watch",
+    "build": "NODE_OPTIONS=--max-old-space-size=8192 vite build"
+  },
+  "keywords": [],
+  "author": "Matt Taylor (https://mjt.dev)",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/node": "^22.14.1",
+    "typedoc": "^0.27.9",
+    "typescript": "^5.8.3"
+  },
+  "peerDependencies": {},
+  "dependencies": {
+    "@mjt-engine/object": "github:mjt-engine/object",
+    "@vitest/expect": "^3.1.2",
+    "chai": "^5.2.0",
+    "vite": "^6.3.2",
+    "vitest": "^3.1.2"
+  }
+}
